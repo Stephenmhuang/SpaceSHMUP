@@ -1,15 +1,26 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+
 
 public class Main : MonoBehaviour {
     static public Main S;
+    static public Dictionary<WeaponType, WeaponDefinition> W_DEFS;
 
     public GameObject[] prefabEnemies;
     public float enemySpawnPerSecond = 0.5f;
     public float enemySpawnPadding = 1.5f;
+    public WeaponDefinition[] weaponDefinitions;
+
+    public GameObject prefabPowerUp;
+    public WeaponType[] powerUpFrequency = new WeaponType[]
+    {
+        WeaponType.blaster, WeaponType.blaster, WeaponType.spread, WeaponType.shield
+    };
 
     public bool ______________;
+
+    public WeaponType[] activeWeaponTypes;
     public float enemySpawnRate;
 
     void Awake()
@@ -18,6 +29,21 @@ public class Main : MonoBehaviour {
         Utils.SetCameraBounds(this.GetComponent<Camera>());
         enemySpawnRate = 1f / enemySpawnPerSecond;
         Invoke("SpawnEnemy", enemySpawnRate);
+
+        W_DEFS = new Dictionary<WeaponType, WeaponDefinition>();
+        foreach(WeaponDefinition def in weaponDefinitions)
+        {
+            W_DEFS[def.type] = def;
+        }
+    }
+
+    static public WeaponDefinition GetWeaponDefinition(WeaponType wt)
+    {
+        if (W_DEFS.ContainsKey(wt))
+        {
+            return (W_DEFS[wt]);
+        }
+        return (new WeaponDefinition());
     }
 
     public void SpawnEnemy()
@@ -33,7 +59,7 @@ public class Main : MonoBehaviour {
         Invoke("SpawnEnemy", enemySpawnRate);
     }
 
-    public coid DelayedRestart(float delay)
+    public void DelayedRestart(float delay)
     {
         Invoke("Restart", delay);
     }
@@ -45,11 +71,31 @@ public class Main : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+
+        activeWeaponTypes = new WeaponType[weaponDefinitions.Length];
+		for (int i=0; i<weaponDefinitions.Length; i++)
+        {
+            activeWeaponTypes[i] = weaponDefinitions[i].type;
+        }
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+
+    public void ShipDestroyed(Enemy e)
+    {
+        if(Random.value <= e.powerUpDropChance)
+        {
+            int ndx = Random.Range(0, powerUpFrequency.Length);
+            WeaponType puType = powerUpFrequency[ndx];
+
+            GameObject go = Instantiate(prefabPowerUp) as GameObject;
+            PowerUp pu = go.GetComponent<PowerUp>();
+            pu.SetType(puType);
+            pu.transform.position = e.transform.position;
+        }
+    }
 }
