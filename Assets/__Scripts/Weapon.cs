@@ -125,11 +125,10 @@ public class Weapon : MonoBehaviour {
             case WeaponType.missle:
                 p = MakeProjectile();
                 p.GetComponent<Rigidbody>().velocity = Vector3.up* def.velocity;
-                p.GetComponent<Rigidbody>().velocity.Normalize();
                 p = MakeProjectile();
-                p.GetComponent<Rigidbody>().velocity = Vector3.up * def.velocity;
+                p.GetComponent<Rigidbody>().velocity = new Vector3(-3f, 0.9f, 0) * def.velocity;
                 p = MakeProjectile();
-                p.GetComponent<Rigidbody>().velocity = Vector3.up * def.velocity;
+                p.GetComponent<Rigidbody>().velocity = new Vector3(3f, 0.9f, 0) * def.velocity;
                 break;
         }
     }
