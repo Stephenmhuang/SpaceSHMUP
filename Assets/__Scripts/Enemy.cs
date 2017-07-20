@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Enemy : MonoBehaviour {
 
     public float speed = 10f;
@@ -21,6 +22,9 @@ public class Enemy : MonoBehaviour {
     public Material[] materials;
     public int remainingDamageFrames = 0;
 
+
+
+
     void Awake()
     {
         materials = Utils.GetAllMaterials(gameObject);
@@ -34,7 +38,7 @@ public class Enemy : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+
 	}
 	
 	// Update is called once per frame
@@ -110,6 +114,8 @@ public class Enemy : MonoBehaviour {
                 {
                     Main.S.ShipDestroyed(this);
                     Destroy(this.gameObject);
+                    Kills.killCount += 1;
+
                 }
                 Destroy(other);
                 break;
@@ -133,4 +139,6 @@ public class Enemy : MonoBehaviour {
             materials[i].color = originalColors[i];
         }
     }
+
+
 }

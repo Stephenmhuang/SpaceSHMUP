@@ -39,6 +39,8 @@ public class Weapon : MonoBehaviour {
     public GameObject collar;
     public float lastShot;
 
+    public GameObject target;
+
     // Use this for initialization
     void Awake()
     {
@@ -46,7 +48,10 @@ public class Weapon : MonoBehaviour {
     }
 
     void Start () {
+
         
+      
+
         SetType(_type);
 
         if(PROJECTILE_ANCHOR == null)
@@ -62,6 +67,11 @@ public class Weapon : MonoBehaviour {
         }
 		
 	}
+    void FixedUpdate()
+    {
+        target = GameObject.FindGameObjectWithTag("Enemy");
+    }
+   
 	
     public WeaponType type
     {
@@ -108,8 +118,23 @@ public class Weapon : MonoBehaviour {
                 p = MakeProjectile();
                 p.GetComponent<Rigidbody>().velocity = new Vector3(.2f, 0.9f, 0) * def.velocity;
                 break;
+            case WeaponType.laser:
+                p = MakeProjectile();
+                p.GetComponent<Rigidbody>().velocity = Vector3.up * def.velocity;
+                break;
+            case WeaponType.missle:
+                p = MakeProjectile();
+                p.GetComponent<Rigidbody>().velocity = Vector3.up* def.velocity;
+                p.GetComponent<Rigidbody>().velocity.Normalize();
+                p = MakeProjectile();
+                p.GetComponent<Rigidbody>().velocity = Vector3.up * def.velocity;
+                p = MakeProjectile();
+                p.GetComponent<Rigidbody>().velocity = Vector3.up * def.velocity;
+                break;
         }
     }
+
+    
 
     public Projectile MakeProjectile()
     {
