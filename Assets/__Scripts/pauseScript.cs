@@ -30,6 +30,7 @@ public class pauseScript : MonoBehaviour {
 
     public void Reset()
     {
+        Kills.killCount = 0;
         SceneManager.LoadScene("_Scene_0");
     }
     public void Exit()

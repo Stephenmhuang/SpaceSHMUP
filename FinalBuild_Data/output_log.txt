@@ -21,3 +21,10 @@ Platform assembly: D:\Unity Projects\SpaceSHMUP\FinalBuild_Data\Managed\System.d
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 1.183605 ms
+Setting up 4 worker threads for Enlighten.
+  Thread -> id: 4ab4 -> priority: 1 
+  Thread -> id: 3bbc -> priority: 1 
+  Thread -> id: 918 -> priority: 1 
+  Thread -> id: 1fc -> priority: 1 
